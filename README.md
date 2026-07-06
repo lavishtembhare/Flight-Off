@@ -1,50 +1,77 @@
-# Flight-Off ✈️
+# Flight-Off
 
-[![Unity Version](https://img.shields.io/badge/Unity-2022.3%2B-blue.svg?style=flat&logo=unity)](https://unity.com/)
-[![Platform](https://img.shields.io/badge/Platform-PC%20%7C%20WebGL-orange.svg)]()
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+A small Unity flying-game prototype: a plane flies forward automatically while the player tilts it up and down to dodge a row of obstacles. Built as a course/tutorial challenge ("Challenge 1") on top of Unity's default URP 3D template.
 
-**Flight-Off** is an action-packed, physics-based arcade flight game built using the Unity 3D engine. Take control of high-speed aircraft, navigate complex aerial terrains, evade obstacles, and complete high-stakes challenges. 
+![Unity](https://img.shields.io/badge/Unity-6000.0.72f1-black?logo=unity)
+![Render Pipeline](https://img.shields.io/badge/Pipeline-URP-blue)
+![License](https://img.shields.io/badge/License-CC0%201.0-lightgrey)
 
----
+## Overview
 
-## 🚀 Features
+The player controls a small propeller plane that constantly moves forward. Pressing up/down (or W/S) pitches the nose to climb or dive, weaving between a line of obstacles placed down the runway. A chase camera trails behind the plane, and the propeller spins continuously for visual feedback.
 
-- **Physics-Driven Flight Mechanics:** Realistically balanced arcade flight behavior handling pitch, roll, yaw, and throttle.
-- **Dynamic Camera System:** Smooth Cinemachine-powered camera transitions tracking speed and orientation.
-- **Obstacle & Boundary Systems:** Immersive boundary constraints and procedural/static hazards to test your pilot skills.
-- **Modern UI/HUD:** Interactive dashboards displaying Real-time Altitude, Speed, Fuel/Energy metrics, and Minimaps.
-- **Cross-Platform Input Support:** Built using Unity's modern Input System supporting Keyboard/Mouse and Gamepad controllers.
+A recorded outcome of the challenge is included at `Assets/Challenge 1/Instructions/Challenge 1 - Outcome.mov` for reference.
 
----
+## Gameplay / Controls
 
-## 🛠️ Tech Stack & Requirements
+| Input | Action |
+|---|---|
+| `W` / `Up Arrow` | Pitch nose up (climb) |
+| `S` / `Down Arrow` | Pitch nose down (dive) |
+| *(automatic)* | Plane always moves forward |
 
-- **Game Engine:** Unity (Recommended version: `2022.3 LTS` or higher)
-- **Language:** C# (.NET Standard 2.1)
-- **Render Pipeline:** Universal Render Pipeline (URP) for optimized lighting and post-processing.
-- **Input System:** Unity New Input System Package.
+## Tech Stack
 
----
+| | |
+|---|---|
+| Engine | Unity **6000.0.72f1** |
+| Render Pipeline | Universal Render Pipeline (URP) |
+| Input | Legacy `Input.GetAxis` (Input System package is present but not yet wired up) |
+| Scripting | C# |
 
-## 📂 Project Structure
+Key packages (see `Packages/manifest.json`): URP, Input System, AI Navigation, Timeline, Visual Scripting — most are default packages carried over from Unity's 3D URP template rather than actively used by the gameplay code.
 
-The project follows a standard Unity modular architecture:
+## Project Structure
 
-```text
-Flight-Off/
-├── Assets/
-│   ├── _Project/               # Main game development directory
-│   │   ├── Audio/              # Sound effects (SFX) and background music
-│   │   ├── Materials/          # Skyboxes, shaders, and surface materials
-│   │   ├── Prefabs/            # Reusable GameObjects (Aircrafts, Obstacles, UI)
-│   │   ├── Scenes/             # MainMenu, Level_01, Level_02, Sandbox
-│   │   ├── Scripts/            # Core C# Logic
-│   │   │   ├── Camera/         # Camera tracking and shaking scripts
-│   │   │   ├── Controllers/    # FlightController, InputManager
-│   │   │   ├── Managers/       # GameManager, UIManager, AudioManager
-│   │   │   └── Environment/    # Obstacle generation and triggers
-│   │   ├── Settings/           # URP Assets and Input Action Configurations
-│   │   └── Textures/           # HUD Sprites and 3D Asset textures
-│   └── Packages/               # Unity Manifest dependencies
-└── ProjectSettings/            # Engine-specific physics, input, and tag allocations
+```
+Assets/
+├── Challenge 1/
+│   ├── Challenge 1.unity          # Main gameplay scene
+│   ├── Scripts/
+│   │   ├── PlayerControllerX.cs   # Forward movement + pitch control
+│   │   ├── FollowPlayerX.cs       # Offset chase camera
+│   │   └── SpinPropellerX.cs      # Continuous propeller rotation
+│   ├── Instructions/              # Reference outcome video
+│   └── _Source_Files/             # Materials, lighting data
+├── Course Library/
+│   ├── Vehicles/Planes/           # Plane prefab (Small_Plane02)
+│   └── Sky/                       # Skybox prefabs
+├── Scenes/
+│   └── SampleScene.unity          # Default template scene
+└── TutorialInfo/                  # Unity's built-in "Readme" welcome asset
+```
+
+## Scripts
+
+- **`PlayerControllerX`** — Moves the plane forward every physics frame (`speed`) and rotates it on the X-axis based on vertical input (`tiltSpeed`).
+- **`FollowPlayerX`** — Keeps a camera (or object) positioned at a fixed offset behind/above the `plane` it's tracking, updated in `LateUpdate` for smooth follow.
+- **`SpinPropellerX`** — Continuously rotates a transform (the propeller mesh) at `rotationSpeed` degrees/second.
+
+## Getting Started
+
+1. Install **Unity Hub** and **Unity 6000.0.72f1** (or a compatible 6000.x LTS version).
+2. Clone the repo:
+   ```bash
+   git clone https://github.com/lavishtembhare/Flight-Off.git
+   ```
+3. Open Unity Hub → **Add** → select the cloned folder.
+4. Once the project loads, open `Assets/Challenge 1/Challenge 1.unity`.
+5. Press **Play** to try the challenge.
+
+## License
+
+Released under **CC0 1.0 Universal** — public domain, no rights reserved. See [LICENSE](LICENSE).
+
+## Author
+
+**Lavish Tembhare** — [@lavishtembhare](https://github.com/lavishtembhare)
